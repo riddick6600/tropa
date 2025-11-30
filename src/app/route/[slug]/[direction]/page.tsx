@@ -1,8 +1,9 @@
 "use client";
 
 import ValidationButton from '@/components/features/ValidationButton';
+import YandexMap from '@/components/features/YandexMap';
 import { useAudio } from '@/lib/context/AudioContext';
-import { ROUTE_CONTENT } from '@/lib/data';
+import { MOCK_COORDINATES, ROUTE_CONTENT } from '@/lib/data';
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
@@ -23,7 +24,6 @@ export default function RoutePage() {
     const routeId = `${slug}-${direction}`;
 
     // Auto-play logic
-    // Auto-play logic
     useEffect(() => {
         // Check hash for #play
         if (typeof window !== 'undefined' && window.location.hash === '#play' && !hasAutoPlayedRef.current) {
@@ -42,6 +42,17 @@ export default function RoutePage() {
         });
     };
 
+    // Определяем маркеры для карты
+    const mapMarkers = direction === 'to'
+        ? [
+            { coords: [MOCK_COORDINATES.ritsa.lat, MOCK_COORDINATES.ritsa.lon] as [number, number], title: 'Старт: Большая Рица', description: 'Начало маршрута' },
+            { coords: [MOCK_COORDINATES.malayaRitsa.lat, MOCK_COORDINATES.malayaRitsa.lon] as [number, number], title: 'Финиш: Малая Рица', description: 'Конец маршрута' }
+        ]
+        : [
+            { coords: [MOCK_COORDINATES.malayaRitsa.lat, MOCK_COORDINATES.malayaRitsa.lon] as [number, number], title: 'Старт: Малая Рица', description: 'Начало спуска' },
+            { coords: [MOCK_COORDINATES.ritsa.lat, MOCK_COORDINATES.ritsa.lon] as [number, number], title: 'Финиш: Большая Рица', description: 'Конец маршрута' }
+        ];
+
     return (
         <div className="container">
             <div style={{ marginBottom: '1.5rem' }}>
@@ -51,6 +62,23 @@ export default function RoutePage() {
                 </Link>
                 <h1 className="title-gradient" style={{ fontSize: '1.8rem', lineHeight: '1.2', marginBottom: '0.5rem' }}>{routeGroup.title}</h1>
                 <p style={{ color: 'var(--muted)', fontSize: '1.1rem' }}>{route.name}</p>
+            </div>
+
+            {/* Карта маршрута */}
+            <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 'bold' }}>📍 Карта маршрута</h3>
+                <YandexMap
+                    center={direction === 'to'
+                        ? [MOCK_COORDINATES.ritsa.lat, MOCK_COORDINATES.ritsa.lon]
+                        : [MOCK_COORDINATES.malayaRitsa.lat, MOCK_COORDINATES.malayaRitsa.lon]
+                    }
+                    markers={mapMarkers}
+                    showUserLocation={true}
+                    zoom={14}
+                />
+                <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--muted)' }}>
+                    Красная точка — ваше местоположение. Синие точки — начало и конец маршрута.
+                </p>
             </div>
 
             <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
@@ -63,7 +91,7 @@ export default function RoutePage() {
                     <ValidationButton
                         placeId={routeId}
                         type="route"
-                        label="🏁 Я прошел маршрут"
+                        label="Я прошел маршрут"
                     />
                 </div>
 
@@ -76,8 +104,41 @@ export default function RoutePage() {
                     Слушать гид о маршруте
                 </button>
 
-                <div style={{ lineHeight: '1.6', color: 'var(--foreground)', whiteSpace: 'pre-line' }}>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 'bold' }}>📖 Описание маршрута</h3>
+                <div style={{ lineHeight: '1.6', color: 'var(--foreground)', whiteSpace: 'pre-line', marginBottom: '1.5rem' }}>
                     {route.description}
+                </div>
+
+                {/* Дополнительная информация */}
+                <div style={{
+                    background: 'rgba(96, 165, 250, 0.1)',
+                    padding: '1rem',
+                    borderRadius: 'var(--radius)',
+                    border: '1px solid rgba(96, 165, 250, 0.3)',
+                    marginTop: '1.5rem'
+                }}>
+                    <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', fontWeight: 'bold', color: '#60a5fa' }}>
+                        💡 Полезные советы
+                    </h4>
+                    <ul style={{ paddingLeft: '1.5rem', lineHeight: '1.8', color: 'var(--foreground)' }}>
+                        {direction === 'to' ? (
+                            <>
+                                <li>Возьмите с собой достаточно воды (минимум 1-1.5 литра на человека)</li>
+                                <li>Наденьте удобную треккинговую обувь с хорошим протектором</li>
+                                <li>Маршрут занимает около 2-3 часов в одну сторону</li>
+                                <li>Лучшее время для похода — утро или вторая половина дня</li>
+                                <li>Следуйте маркировке на деревьях, не сходите с тропы</li>
+                            </>
+                        ) : (
+                            <>
+                                <li>Спуск легче подъема, но требует внимания на скользких участках</li>
+                                <li>Используйте треккинговые палки для устойчивости</li>
+                                <li>Время спуска — около 1.5-2 часов</li>
+                                <li>Не торопитесь, наслаждайтесь видами</li>
+                                <li>После спуска можно отдохнуть у озера Большая Рица</li>
+                            </>
+                        )}
+                    </ul>
                 </div>
             </div>
         </div>

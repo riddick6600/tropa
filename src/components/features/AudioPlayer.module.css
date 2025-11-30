@@ -38,9 +38,10 @@
 .controls {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
+/* Главная кнопка Play/Pause */
 .playBtn {
   width: 48px;
   height: 48px;
@@ -60,6 +61,48 @@
   transform: scale(1.05);
   background: var(--primary-hover);
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+}
+
+.playBtn:active {
+  transform: scale(0.98);
+}
+
+/* Унифицированные стили для вспомогательных кнопок */
+.stopBtn,
+.downloadBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stopBtn:hover,
+.downloadBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.stopBtn:active,
+.downloadBtn:active {
+  transform: scale(0.95);
+}
+
+.stopBtn:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.downloadBtn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .volume {

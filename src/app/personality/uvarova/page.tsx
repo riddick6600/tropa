@@ -88,28 +88,33 @@ export default function UvarovaPage() {
                         style={{ objectFit: 'cover' }}
                     />
                 </div>
+            </div>
 
-                <button
-                    onClick={handlePlay}
-                    className="btn btn-primary"
-                    style={{ marginBottom: '1.5rem' }}
-                >
-                    {isCurrentTrack && isPlaying ? (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6zm8-14v14h4V5z" /></svg>
-                            Слушать историю
-                        </>
-                    ) : (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                            Слушать историю (+50 баллов)
-                        </>
-                    )}
-                </button>
+            <button
+                onClick={handlePlay}
+                className="btn btn-primary"
+                style={{
+                    position: 'sticky',
+                    top: '80px',
+                    marginBottom: '1.5rem',
+                    zIndex: 50
+                }}
+            >
+                {isCurrentTrack && isPlaying ? (
+                    <>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6zm8-14v14h4V5z" /></svg>
+                        Пауза
+                    </>
+                ) : (
+                    <>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                        Слушать историю
+                    </>
+                )}
+            </button>
 
-                <div ref={contentRef} style={{ lineHeight: '1.8', color: 'var(--foreground)', whiteSpace: 'pre-line', fontSize: '1.05rem' }}>
-                    {uvarova.content}
-                </div>
+            <div ref={contentRef} style={{ lineHeight: '1.8', color: 'var(--foreground)', whiteSpace: 'pre-line', fontSize: '1.05rem' }}>
+                {uvarova.content}
             </div>
 
             <div style={{ marginBottom: '2rem' }}>

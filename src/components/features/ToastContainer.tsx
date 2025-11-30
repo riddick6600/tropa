@@ -15,7 +15,7 @@ export default function ToastContainer() {
                     <div className={styles.content}>
                         <span className={styles.message}>{toast.message}</span>
                         {toast.points && (
-                            <span className={styles.points}>+{toast.points} баллов</span>
+                            <span className={styles.points}>+{toast.points}</span>
                         )}
                     </div>
                 </div>

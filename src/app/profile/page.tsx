@@ -7,8 +7,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function ProfilePage() {
-    const { userData, setName } = useGamification();
+    const { userData, setName, getRank } = useGamification();
     const [inputName, setInputName] = useState('');
+
+    const currentRank = getRank(userData.points);
 
     useEffect(() => {
         if (userData.name) {
@@ -72,6 +74,27 @@ export default function ProfilePage() {
                             <button className="btn btn-primary" onClick={handleSaveName} style={{ width: 'auto' }}>
                                 Сохранить
                             </button>
+                        </div>
+                    </div>
+
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1.2rem',
+                        background: `linear-gradient(135deg, ${currentRank.color}15, ${currentRank.color}25)`,
+                        borderRadius: '12px',
+                        border: `2px solid ${currentRank.color}`,
+                        marginBottom: '1rem'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <span style={{ fontSize: '2rem' }}>{currentRank.icon}</span>
+                            <div>
+                                <div style={{ fontSize: '0.85rem', color: 'var(--muted)', marginBottom: '2px' }}>Ваше звание</div>
+                                <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: currentRank.color }}>
+                                    {currentRank.title}
+                                </div>
+                            </div>
                         </div>
                     </div>
 

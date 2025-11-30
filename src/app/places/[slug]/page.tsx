@@ -69,25 +69,30 @@ export default function PlacePage() {
                 </div>
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
-                <button
-                    onClick={handlePlay}
-                    className="btn btn-primary"
-                    style={{ marginBottom: '1.5rem' }}
-                >
-                    {isCurrentTrack && isPlaying ? (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6zm8-14v14h4V5z" /></svg>
-                            Слушать историю
-                        </>
-                    ) : (
-                        <>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                            Слушать историю (+50 баллов)
-                        </>
-                    )}
-                </button>
+            <button
+                onClick={handlePlay}
+                className="btn btn-primary"
+                style={{
+                    position: 'sticky',
+                    top: '80px',
+                    marginBottom: '1.5rem',
+                    zIndex: 50
+                }}
+            >
+                {isCurrentTrack && isPlaying ? (
+                    <>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6zm8-14v14h4V5z" /></svg>
+                        Пауза
+                    </>
+                ) : (
+                    <>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                        Слушать историю
+                    </>
+                )}
+            </button>
 
+            <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
                 <div style={{ lineHeight: '1.8', color: 'var(--foreground)', whiteSpace: 'pre-line', fontSize: '1.05rem' }}>
                     {place.content}
                 </div>

@@ -42,9 +42,28 @@ export default function ValidationButton({
         return (
             <button
                 disabled
-                className="w-full py-3 px-6 bg-green-600 text-white rounded-xl font-medium flex items-center justify-center gap-2 opacity-90 cursor-default"
+                style={{
+                    width: '100%',
+                    padding: '14px 24px',
+                    background: 'var(--primary)',
+                    color: 'white',
+                    borderRadius: 'var(--radius)',
+                    fontWeight: '600',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    opacity: 0.9,
+                    cursor: 'default',
+                    border: 'none',
+                    transition: 'all 0.3s ease'
+                }}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
                 {type === 'place' ? 'Вы на месте' : 'Маршрут пройден'}
             </button>
         );
@@ -54,11 +73,32 @@ export default function ValidationButton({
         <button
             onClick={handleValidate}
             disabled={isLoading}
-            className={`w-full py-3 px-6 rounded-xl font-medium text-white transition-all transform active:scale-95
-                ${isLoading ? 'bg-gray-400 cursor-wait' : 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl'}
-            `}
+            className="validation-btn"
+            style={{
+                width: '100%',
+                padding: '14px 24px',
+                background: isLoading ? 'var(--muted)' : 'var(--accent)',
+                color: 'white',
+                borderRadius: 'var(--radius)',
+                fontWeight: '600',
+                fontSize: '1rem',
+                border: 'none',
+                cursor: isLoading ? 'wait' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: isLoading ? 'none' : '0 4px 12px rgba(59, 130, 246, 0.3)',
+                transform: 'scale(1)'
+            }}
         >
             {isLoading ? 'Проверка геолокации...' : label}
+            <style jsx>{`
+                .validation-btn:hover:not(:disabled) {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+                }
+                .validation-btn:active:not(:disabled) {
+                    transform: translateY(0);
+                }
+            `}</style>
         </button>
     );
 }
