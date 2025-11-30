@@ -3,6 +3,13 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
+interface HistoryItem {
+    id: number;
+    message: string;
+    points: number;
+    timestamp: number;
+}
+
 interface UserData {
     name: string;
     points: number;
@@ -10,6 +17,7 @@ interface UserData {
     completedRoutes: string[];
     readArticles: string[];
     listenedAudio: string[];
+    history: HistoryItem[];
 }
 
 const INITIAL_DATA: UserData = {
@@ -19,6 +27,7 @@ const INITIAL_DATA: UserData = {
     completedRoutes: [],
     readArticles: [],
     listenedAudio: [],
+    history: [],
 };
 
 interface ToastMessage {
@@ -54,7 +63,19 @@ export function GamificationProvider({ children }: { children: React.ReactNode }
     }, []);
 
     const addPoints = useCallback((amount: number, reason: string) => {
-        setUserData((prev) => ({ ...prev, points: prev.points + amount }));
+        setUserData((prev) => {
+            const newHistoryItem: HistoryItem = {
+                id: Date.now(),
+                message: reason,
+                points: amount,
+                timestamp: Date.now()
+            };
+            return {
+                ...prev,
+                points: prev.points + amount,
+                history: [newHistoryItem, ...prev.history]
+            };
+        });
         showToast(reason, amount);
     }, [setUserData, showToast]);
 
@@ -63,26 +84,20 @@ export function GamificationProvider({ children }: { children: React.ReactNode }
     }, [setUserData]);
 
     const visitPlace = useCallback((placeId: string) => {
-        // The outer check uses the current `userData` from the closure.
-        // This callback will re-create if `userData.visitedPlaces` changes,
-        // ensuring `userData.visitedPlaces` is up-to-date for this check.
         if (!userData.visitedPlaces.includes(placeId)) {
             let updated = false;
             setUserData((prev) => {
-                // The inner check uses the `prev` state, ensuring atomicity
-                // in case of rapid calls or concurrent updates.
                 if (prev.visitedPlaces.includes(placeId)) {
                     return prev;
                 }
-                updated = true; // Mark that an update occurred
+                updated = true;
                 return { ...prev, visitedPlaces: [...prev.visitedPlaces, placeId] };
             });
-            // Only call addPoints if the state was actually updated
             if (updated) {
                 addPoints(100, 'Вы посетили новое место!');
             }
         }
-    }, [userData.visitedPlaces, setUserData, addPoints]); // Re-create if visitedPlaces changes to get fresh `userData.visitedPlaces`
+    }, [userData.visitedPlaces, setUserData, addPoints]);
 
     const completeRoute = useCallback((routeId: string) => {
         if (!userData.completedRoutes.includes(routeId)) {
@@ -132,7 +147,6 @@ export function GamificationProvider({ children }: { children: React.ReactNode }
         }
     }, [userData.listenedAudio, setUserData, addPoints]);
 
-    // Prevent hydration mismatch by not rendering until initialized
     if (!isInitialized) {
         return null;
     }

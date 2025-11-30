@@ -4,18 +4,17 @@ import ValidationButton from '@/components/features/ValidationButton';
 import { useAudio } from '@/lib/context/AudioContext';
 import { ROUTE_CONTENT } from '@/lib/data';
 import Link from 'next/link';
-import { notFound, useParams, usePathname } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 export default function RoutePage() {
     const params = useParams();
-    const pathname = usePathname();
     const { slug, direction } = params as { slug: string; direction: string };
     const { play } = useAudio();
     const hasAutoPlayedRef = useRef(false);
 
-    // Type guard or safe access
-    const routeGroup = ROUTE_CONTENT[slug as keyof typeof ROUTE_CONTENT];
+    // Find route group by id matching the slug
+    const routeGroup = Object.values(ROUTE_CONTENT).find(group => group.id === slug);
     if (!routeGroup) return notFound();
 
     const route = routeGroup.routes[direction as keyof typeof routeGroup.routes];
@@ -24,15 +23,17 @@ export default function RoutePage() {
     const routeId = `${slug}-${direction}`;
 
     // Auto-play logic
+    // Auto-play logic
     useEffect(() => {
-        if (pathname?.endsWith('/play') && !hasAutoPlayedRef.current) {
+        // Check hash for #play
+        if (typeof window !== 'undefined' && window.location.hash === '#play' && !hasAutoPlayedRef.current) {
             hasAutoPlayedRef.current = true;
             play({
                 title: route.audioTitle,
                 audioId: routeId
             });
         }
-    }, [pathname, play, route.audioTitle, routeId]);
+    }, [play, route.audioTitle, routeId]);
 
     const handlePlay = () => {
         play({

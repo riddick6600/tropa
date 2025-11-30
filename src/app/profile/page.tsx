@@ -29,25 +29,17 @@ export default function ProfilePage() {
     };
 
     const getRouteName = (id: string) => {
-        // id format: slug-direction (e.g. malaya-ritsa-to)
-        // We can iterate over ROUTE_CONTENT
         for (const group of Object.values(ROUTE_CONTENT)) {
             for (const route of Object.values(group.routes)) {
-                // We need to reconstruct the ID to check match
-                // But we don't have the slug easily here unless we store it in route object or reconstruct
-                // Let's assume id format matches what we set in RoutePage: `${slug}-${direction}`
-                // We can try to split the ID
                 const parts = id.split('-');
-                const direction = parts.pop(); // last part is direction
-                const slug = parts.join('-'); // rest is slug
+                const direction = parts.pop();
+                const slug = parts.join('-');
 
                 if (group.id === slug && route.slug === direction) {
                     return `${group.title}: ${route.name}`;
                 }
             }
         }
-
-        // Fallback for hardcoded check if split fails or data mismatch
         if (id.includes('to')) return 'Малая Рица: Туда';
         if (id.includes('back')) return 'Малая Рица: Обратно';
         return id;
@@ -89,11 +81,32 @@ export default function ProfilePage() {
                     </div>
                 </div>
 
-                <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>История Путешествий</h2>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>История Активности</h2>
 
+                <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
+                    {userData.history && userData.history.length > 0 ? (
+                        <ul style={{ listStyle: 'none' }}>
+                            {userData.history.map((item) => (
+                                <li key={item.id} style={{ padding: '12px 0', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div>
+                                        <div style={{ fontWeight: '500' }}>{item.message}</div>
+                                        <div style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>
+                                            {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </div>
+                                    </div>
+                                    <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>+{item.points}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p style={{ color: '#64748b', textAlign: 'center' }}>История пока пуста.</p>
+                    )}
+                </div>
+
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Достижения</h2>
                 <div className="glass-panel" style={{ padding: '1.5rem' }}>
                     {userData.visitedPlaces.length === 0 && userData.completedRoutes.length === 0 ? (
-                        <p style={{ color: '#64748b', textAlign: 'center' }}>История пока пуста. Начните путешествие!</p>
+                        <p style={{ color: '#64748b', textAlign: 'center' }}>Пока нет достижений.</p>
                     ) : (
                         <ul style={{ listStyle: 'none' }}>
                             {userData.visitedPlaces.map((id) => (

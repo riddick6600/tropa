@@ -12,12 +12,14 @@ export default function StickyAudioPlayer() {
     // Award points when audio starts playing (if not already awarded)
     useEffect(() => {
         if (isPlaying && currentTrack) {
+            // Check if already listened is handled inside listenAudio, 
+            // but we can add a local ref check if needed to avoid spamming the context function
             listenAudio(currentTrack.audioId);
         }
     }, [isPlaying, currentTrack, listenAudio]);
 
     if (!currentTrack) {
-        return null; // Or render a placeholder if desired
+        return null;
     }
 
     return (
@@ -39,15 +41,6 @@ export default function StickyAudioPlayer() {
                 <button className={styles.stopBtn} onClick={stop} title="Стоп">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z" /></svg>
                 </button>
-
-                <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    className={styles.volume}
-                    value={volume}
-                    onChange={(e) => setVolume(Number(e.target.value))}
-                />
             </div>
         </div>
     );

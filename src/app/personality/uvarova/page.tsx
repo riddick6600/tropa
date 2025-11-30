@@ -3,6 +3,7 @@
 import { useAudio } from '@/lib/context/AudioContext';
 import { useGamification } from '@/lib/context/GamificationContext';
 import { PERSONALITY_CONTENT } from '@/lib/data';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
@@ -40,6 +41,16 @@ export default function UvarovaPage() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [uvarova.slug, readArticle]);
 
+    // Auto-play logic
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.hash === '#play') {
+            play({
+                title: uvarova.audioTitle,
+                audioId: uvarova.slug
+            });
+        }
+    }, [play, uvarova.audioTitle, uvarova.slug]);
+
     const handlePlay = () => {
         play({
             title: uvarova.audioTitle,
@@ -63,19 +74,19 @@ export default function UvarovaPage() {
             <div className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
                 <div style={{
                     width: '100%',
-                    height: '250px',
-                    background: 'linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%)',
+                    height: '300px',
+                    position: 'relative',
                     borderRadius: '12px',
                     marginBottom: '1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                    overflow: 'hidden',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                 }}>
-                    Фотография П.С. Уваровой
+                    <Image
+                        src="/images/uvarova.png"
+                        alt="П.С. Уварова"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                    />
                 </div>
 
                 <button
