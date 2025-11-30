@@ -1,0 +1,177 @@
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 20px 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mapBackground {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+  position: relative;
+}
+
+/* Декоративные элементы карты */
+.mapBackground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(22, 101, 52, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 101, 52, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.placeMarker {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: pulse 2s infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  cursor: pointer;
+  z-index: 2;
+}
+
+.userMarker {
+  position: absolute;
+  font-size: 2rem;
+  animation: fadeInBounce 0.5s ease-out;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  z-index: 3;
+}
+
+.showMeButton {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--foreground);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.showMeButton:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.showMeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--card);
+  color: var(--muted);
+}
+
+/* Маркер компаса */
+.compass {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  background: var(--card);
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+/* Анимации */
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.15); 
+    opacity: 0.85; 
+  }
+}
+
+@keyframes fadeInBounce {
+  0% { 
+    transform: scale(0) translateY(-30px); 
+    opacity: 0; 
+  }
+  50% { 
+    transform: scale(1.2) translateY(-5px); 
+  }
+  100% { 
+    transform: scale(1) translateY(0); 
+    opacity: 1; 
+  }
+}
+
+/* Путь маршрута */
+.routePath {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.routeLine {
+  stroke: var(--primary);
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawPath 2s ease-out forwards;
+  filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
+}
+
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Точки интереса на маршруте */
+.poiMarker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border: 2px solid white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: poiPulse 3s infinite;
+  z-index: 2;
+}
+
+@keyframes poiPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1); 
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.3); 
+  }
+}
