@@ -30,7 +30,8 @@ export default function RouteClient() {
             hasAutoPlayedRef.current = true;
             play({
                 title: route.audioTitle,
-                audioId: routeId
+                audioId: routeId,
+                audioUrl: route.audioUrl
             });
         }
     }, [play, route.audioTitle, routeId]);
@@ -38,7 +39,8 @@ export default function RouteClient() {
     const handlePlay = () => {
         play({
             title: route.audioTitle,
-            audioId: routeId
+            audioId: routeId,
+            audioUrl: route.audioUrl
         });
     };
 

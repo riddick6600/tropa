@@ -2,6 +2,7 @@
 
 import { Header } from "@/components/ui/Header";
 import { useGamification } from "@/lib/context/GamificationContext";
+import { getAssetPath } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +27,7 @@ export default function Home() {
                     <Link href="/personality/uvarova" className="menu-card" style={{ padding: '0', flexDirection: 'column', alignItems: 'stretch', overflow: 'hidden' }}>
                         <div style={{ position: 'relative', width: '100%', height: '200px' }}>
                             <Image
-                                src="/images/uvarova.png"
+                                src={getAssetPath("/images/uvarova.png")}
                                 alt="П.С. Уварова"
                                 fill
                                 style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
@@ -46,7 +47,7 @@ export default function Home() {
                         <Link href="/places/eshera" className="menu-card" style={{ padding: '0', flexDirection: 'column', alignItems: 'stretch', overflow: 'hidden' }}>
                             <div style={{ position: 'relative', width: '100%', height: '220px' }}>
                                 <Image
-                                    src="/images/eshera.png"
+                                    src={getAssetPath("/images/eshera.png")}
                                     alt="Эшера"
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -61,7 +62,7 @@ export default function Home() {
                         <Link href="/places/ritsa" className="menu-card" style={{ padding: '0', flexDirection: 'column', alignItems: 'stretch', overflow: 'hidden' }}>
                             <div style={{ position: 'relative', width: '100%', height: '220px' }}>
                                 <Image
-                                    src="/images/ritsa.png"
+                                    src={getAssetPath("/images/ritsa.png")}
                                     alt="Озеро Рица"
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -76,7 +77,7 @@ export default function Home() {
                         <Link href="/places/malaya-ritsa" className="menu-card" style={{ padding: '0', flexDirection: 'column', alignItems: 'stretch', overflow: 'hidden' }}>
                             <div style={{ position: 'relative', width: '100%', height: '220px' }}>
                                 <Image
-                                    src="/images/malaya_ritsa.png"
+                                    src={getAssetPath("/images/malaya_ritsa.png")}
                                     alt="Малая Рица"
                                     fill
                                     style={{ objectFit: 'cover' }}

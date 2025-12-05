@@ -2,6 +2,7 @@
 
 import { useAudio } from '@/lib/context/AudioContext';
 import { useGamification } from '@/lib/context/GamificationContext';
+import { getAssetPath } from '@/lib/utils';
 import { useEffect, useRef } from 'react';
 import styles from './AudioPlayer.module.css';
 
@@ -75,8 +76,10 @@ export default function StickyAudioPlayer() {
                 ref={audioRef}
                 preload="metadata"
                 playsInline // Важно для iOS
+                src={currentTrack.audioUrl || getAssetPath('/audio/uvarova.mp3')}
             >
-                <source src="/audio/uvarova.mp3" type="audio/mpeg" />
+                {/* Fallback source is not needed if we set src on audio, but keeping it as legacy just in case */}
+                <source src={currentTrack.audioUrl || getAssetPath('/audio/uvarova.mp3')} type="audio/mpeg" />
                 Ваш браузер не поддерживает аудио элемент.
             </audio>
 

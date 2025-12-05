@@ -25,7 +25,8 @@ export default function PlaceClient() {
         if (place && typeof window !== 'undefined' && window.location.hash === '#play') {
             play({
                 title: place.audioTitle,
-                audioId: place.id
+                audioId: place.id,
+                audioUrl: place.audioUrl
             });
         }
     }, [play, place]);
@@ -42,7 +43,8 @@ export default function PlaceClient() {
     const handlePlay = () => {
         play({
             title: place.audioTitle,
-            audioId: place.id
+            audioId: place.id,
+            audioUrl: place.audioUrl
         });
     };
 

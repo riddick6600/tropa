@@ -3,6 +3,7 @@
 import { useAudio } from '@/lib/context/AudioContext';
 import { useGamification } from '@/lib/context/GamificationContext';
 import { PERSONALITY_CONTENT } from '@/lib/data';
+import { getAssetPath } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
@@ -46,7 +47,8 @@ export default function UvarovaPage() {
         if (typeof window !== 'undefined' && window.location.hash === '#play') {
             play({
                 title: uvarova.audioTitle,
-                audioId: uvarova.slug
+                audioId: uvarova.slug,
+                audioUrl: uvarova.audioUrl
             });
         }
     }, [play, uvarova.audioTitle, uvarova.slug]);
@@ -54,7 +56,8 @@ export default function UvarovaPage() {
     const handlePlay = () => {
         play({
             title: uvarova.audioTitle,
-            audioId: uvarova.slug
+            audioId: uvarova.slug,
+            audioUrl: uvarova.audioUrl
         });
     };
 
@@ -82,7 +85,7 @@ export default function UvarovaPage() {
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                 }}>
                     <Image
-                        src="/images/uvarova.png"
+                        src={getAssetPath("/images/uvarova.png")}
                         alt="П.С. Уварова"
                         fill
                         style={{ objectFit: 'cover' }}

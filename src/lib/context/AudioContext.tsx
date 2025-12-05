@@ -5,6 +5,7 @@ import React, { createContext, useCallback, useContext, useState } from 'react';
 interface AudioTrack {
     title: string;
     audioId: string;
+    audioUrl?: string;
 }
 
 interface AudioContextType {
