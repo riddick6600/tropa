@@ -10,7 +10,7 @@ export default function QRCodeBlock() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setUrl(`https://storybook.myapsny.ru${pathname}`);
+            setUrl(`https://riddick6600.github.io/tropa${pathname}`);
         }
     }, [pathname]);
 
