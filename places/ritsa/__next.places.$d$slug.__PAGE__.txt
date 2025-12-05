@@ -1,0 +1,7 @@
+1:"$Sreact.fragment"
+2:I[38399,["/tropa/_next/static/chunks/ec22e3630e8552fd.js","/tropa/_next/static/chunks/632e7ae6efa0d635.js"],"default"]
+3:I[97367,["/tropa/_next/static/chunks/ff1a16fafef87110.js","/tropa/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+:HL["/tropa/_next/static/chunks/d2c665088901fd68.css","style"]
+0:{"buildId":"lq2fH8qAkQgxmk5f0meYc","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","link","0",{"rel":"stylesheet","href":"/tropa/_next/static/chunks/d2c665088901fd68.css","precedence":"next"}],["$","script","script-0",{"src":"/tropa/_next/static/chunks/632e7ae6efa0d635.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null
